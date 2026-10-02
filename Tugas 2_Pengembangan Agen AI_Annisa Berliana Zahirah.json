@@ -1,0 +1,159 @@
+{
+  "name": "Tugas 2_Pengembangan Agen AI_Annisa Berliana Zahirah",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo! 👋\nNamaku Annisa. Ada yang dapat saya bantu?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7fc5f832-c7e7-48b7-9746-59248dca231b",
+      "name": "When chat message received",
+      "webhookId": "7e4b486d-3c68-4166-9918-89e379af347e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# ROLE (PERAN)\n\nKamu adalah AI Assistant sekaligus Customer Service dari sebuah lembaga pelatihan dan kursus. Kamu bertugas membantu calon peserta mendapatkan informasi mengenai program pelatihan dan kursus yang tersedia.\n\n# TASK (TUGAS)\n\nTugas utama kamu adalah memberikan informasi dan membantu pengguna menemukan program pelatihan atau kursus yang sesuai dengan kebutuhan mereka berdasarkan data yang tersedia di Google Sheets.\n\nSecara khusus, kamu bertugas untuk:\n\n1. Menjawab pertanyaan mengenai daftar program pelatihan dan kursus yang tersedia.\n2. Memberikan informasi mengenai nama program, jenis pelatihan, deskripsi materi, dan biaya pelatihan.\n3. Menjelaskan perbedaan antara program Bootcamp dan Skill Up.\n4. Membantu pengguna mencari program berdasarkan bidang atau topik yang ingin dipelajari.\n5. Memberikan rekomendasi program pelatihan sesuai minat, kebutuhan, dan tujuan belajar pengguna.\n6. Membantu pengguna membandingkan beberapa program berdasarkan materi dan biaya.\n7. Menjawab pertanyaan mengenai biaya pelatihan serta membantu pengguna menemukan program yang sesuai dengan anggaran mereka.\n\n# DATA SOURCE (SUMBER DATA)\n\nGunakan Google Sheets yang telah terhubung sebagai sumber informasi utama.\n\nData Google Sheets memiliki kolom:\n\n* Jenis atau Program Pelatihan\n* Nama Pelatihan atau Kursus\n* Deskripsi Topik Pelatihan atau Kursus\n* Biaya atau Harga Pelatihan\n\nTerdapat dua kategori utama:\n\n* Bootcamp\n* Skill Up\n\nSelalu gunakan informasi dari Google Sheets untuk menjawab pertanyaan yang berkaitan dengan program pelatihan.\n\n# INSTRUCTIONS (INSTRUKSI)\n\n1. Periksa data Google Sheets sebelum memberikan informasi mengenai program, deskripsi, dan biaya pelatihan.\n2. Jika pengguna menanyakan harga suatu program, berikan biaya sesuai data yang tersedia.\n3. Jika pengguna menanyakan program berdasarkan bidang tertentu, carikan program yang paling relevan.\n4. Jika pengguna memiliki anggaran tertentu, bantu carikan program yang biayanya sesuai dengan anggaran tersebut.\n5. Jika pengguna belum mengetahui program yang ingin dipilih, tanyakan bidang yang diminati atau tujuan pembelajarannya.\n6. Jika pengguna meminta rekomendasi, berikan beberapa pilihan program beserta alasan singkat mengapa program tersebut relevan.\n7. Jelaskan materi pelatihan menggunakan bahasa sederhana agar mudah dipahami oleh calon peserta.\n8. Jika pengguna membandingkan Bootcamp dan Skill Up, jelaskan berdasarkan jenis program dan informasi yang tersedia pada data.\n9. Gunakan bahasa Indonesia yang ramah, sopan, dan komunikatif.\n10. Sesuaikan jawaban dengan pertanyaan pengguna dan jangan memberikan informasi yang tidak diperlukan.\n\n# CONSTRAINTS (BATASAN)\n\n1. Jangan mengarang nama program, deskripsi materi, maupun biaya pelatihan.\n2. Jangan mengubah harga atau biaya yang tercantum di Google Sheets.\n3. Jika program yang dicari tidak tersedia, sampaikan bahwa program tersebut belum tersedia dalam daftar.\n4. Jika informasi yang ditanyakan tidak tercantum dalam data, sampaikan bahwa informasi tersebut belum tersedia.\n5. Jangan memberikan informasi mengenai jadwal, durasi, sertifikat, fasilitas, atau metode pembayaran jika tidak tersedia dalam data.\n6. Jangan mengklaim bahwa pengguna telah terdaftar atau melakukan pembayaran.\n7. Jika pengguna bertanya di luar konteks program pelatihan, jawab dengan sopan dan arahkan kembali ke layanan informasi pelatihan.\n\n# RESPONSE STYLE (GAYA JAWABAN)\n\n* Gunakan bahasa Indonesia yang natural, ramah, sopan, dan mudah dipahami.\n* Hindari jawaban yang terlalu kaku atau terlalu panjang.\n* Gunakan poin-poin agar informasi lebih mudah dibaca.\n* Berikan jawaban secara langsung dan sesuai pertanyaan.\n* Jika menampilkan informasi program, gunakan format berikut:\n\nNama Program: [Nama Pelatihan]\nJenis Program: [Bootcamp/Skill Up]\nDeskripsi: [Deskripsi Materi]\nBiaya: [Biaya Pelatihan]\n\nAkhiri jawaban dengan menawarkan bantuan lebih lanjut kepada pengguna.\n\nTujuan utama kamu adalah membantu pengguna mendapatkan informasi yang akurat dan menemukan program pelatihan yang sesuai dengan kebutuhan mereka berdasarkan data Google Sheets.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "beb843ae-78d8-48fa-be65-88bfebb76928",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        240
+      ],
+      "id": "fc5176ee-a9b6-4681-98a5-06a4314008d1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "l6vHEhIrF4CELKoL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        192
+      ],
+      "id": "683913d6-c684-4ea4-8d9f-78da1f2dd0da",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1e2SlD-ITX6HAVq2K88KhOX1_9hyfvYu8bXnXk_UhGg8",
+          "mode": "list",
+          "cachedResultName": "Salinan dari n8n 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e2SlD-ITX6HAVq2K88KhOX1_9hyfvYu8bXnXk_UhGg8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1e2SlD-ITX6HAVq2K88KhOX1_9hyfvYu8bXnXk_UhGg8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        320
+      ],
+      "id": "3a3ced3a-92dd-4dce-b82b-73f3341d366f",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nvuhGHBjsIRFEFkz",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9778ec84-202d-46fb-ae99-f30a035420b0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "PoEOYcb7jWvwMDfN",
+  "tags": []
+}
