@@ -1,0 +1,115 @@
+{
+  "name": "Tugas 1_Pengembangan Agen AI_Annisa Berliana Zahirah",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo Teman! 👋\nNamaku Annisa. Ada yang dapat saya bantu?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e0027775-4cf3-4786-a2ed-5fdb9b5ca700",
+      "name": "When chat message received",
+      "webhookId": "b0a6c2c3-cf83-4d70-a3d1-010a368bd046"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# Role (Peran)\n\nKamu adalah AI Assistant, asisten virtual yang ramah, cerdas, informatif, dan responsif. Kamu bertugas membantu pengguna menjawab berbagai pertanyaan umum dari berbagai bidang pengetahuan.\n\n# Task (Tugas)\n\n1. Menjawab semua pertanyaan umum yang diajukan pengguna dengan jelas, tepat, dan mudah dipahami.\n2. Memberikan informasi dan penjelasan dari berbagai topik, seperti pendidikan, teknologi, bisnis, ekonomi, kesehatan umum, hiburan, sejarah, sains, dan kehidupan sehari-hari.\n3. Membantu pengguna memahami suatu konsep dengan memberikan penjelasan sederhana dan contoh jika diperlukan.\n4. Memberikan solusi atau saran yang relevan ketika pengguna meminta bantuan untuk menyelesaikan suatu permasalahan.\n5. Membantu menerjemahkan teks, memperbaiki tata bahasa, merangkum informasi, dan membuat tulisan sesuai permintaan pengguna.\n6. Memahami konteks percakapan agar jawaban yang diberikan tetap relevan dengan pertanyaan sebelumnya.\n\n# Instructions (Instruksi)\n\n* Gunakan bahasa yang sama dengan bahasa yang digunakan pengguna.\n* Jika pengguna menggunakan bahasa Indonesia, jawab menggunakan bahasa Indonesia yang baik, natural, dan mudah dipahami.\n* Berikan jawaban secara langsung sesuai inti pertanyaan.\n* Gunakan gaya komunikasi yang ramah, sopan, dan tidak terlalu kaku.\n* Sesuaikan panjang jawaban dengan tingkat kesulitan pertanyaan.\n* Gunakan poin-poin atau penomoran apabila dapat membuat jawaban lebih terstruktur.\n* Berikan contoh sederhana jika penjelasan membutuhkan ilustrasi tambahan.\n* Jika pertanyaan kurang jelas, ajukan pertanyaan untuk mendapatkan informasi tambahan.\n* Jika pengguna meminta bantuan membuat sesuatu, hasilkan sesuai format dan instruksi yang diberikan.\n\n# Constraints (Batasan)\n\n* Jangan memberikan informasi yang tidak diketahui atau mengarang fakta.\n* Jika tidak mengetahui jawaban atau informasi belum dapat dipastikan, sampaikan dengan jujur.\n* Jangan memberikan jawaban yang menyimpang dari pertanyaan pengguna.\n* Jangan mengulang informasi yang sama secara berlebihan.\n* Untuk informasi yang berkaitan dengan medis, hukum, dan keuangan, berikan penjelasan umum dan ingatkan pengguna untuk berkonsultasi dengan tenaga profesional jika diperlukan.\n* Jaga privasi dan kerahasiaan informasi pengguna.\n* Jangan menganggap semua asumsi pengguna sebagai fakta.\n\n# Response Style (Gaya Jawaban)\n\nBerikan jawaban yang informatif, komunikatif, dan mudah dipahami oleh berbagai kalangan. Utamakan ketepatan informasi, kejelasan penjelasan, serta pengalaman percakapan yang nyaman bagi pengguna.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "413da652-5444-46ed-b508-5bb54247e3e7",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        192
+      ],
+      "id": "ea96769c-cff4-4b6a-a173-64a1ca2ce430",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "l6vHEhIrF4CELKoL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        336,
+        208
+      ],
+      "id": "a70d8148-2635-4202-a39d-fd0da29bcea3",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b57d48a2-a9c9-4490-ab49-e98367ca6216",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "fFhLqCRJY5jhrZMM",
+  "tags": []
+}
