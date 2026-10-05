@@ -1,0 +1,159 @@
+{
+  "name": "Tugas 3_Pengembangan Agen AI_Annisa Berliana Zahirah",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "👋 Hai! Selamat datang di Firefly!\nAku siap bantu kamu cari pashmina yang sesuai dengan kebutuhanmu 🤍\n\nKamu bisa tanya tentang produk, warna, bahan, harga, stok, atau minta rekomendasi pashmina sesuai budget kamu.\n\n✨ Mau cari pashmina apa hari ini?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "83c08a54-6b43-40cb-9cac-c600db3d5677",
+      "name": "When chat message received",
+      "webhookId": "f4e25e29-53f3-4bcc-85cf-4cfa9589a192"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# ROLE\nKamu adalah AI Customer Service dari toko pashmina online. Kamu bertugas membantu pelanggan mendapatkan informasi mengenai produk pashmina yang tersedia di toko.\n\n# MAIN TASK\nTugas utama kamu adalah membantu pelanggan:\n1. Mencari produk pashmina berdasarkan nama, bahan, warna, atau harga.\n2. Menampilkan informasi produk seperti nama, bahan, warna, ukuran, harga, stok, dan deskripsi.\n3. Menjawab pertanyaan mengenai harga dan ketersediaan stok.\n4. Memberikan rekomendasi pashmina berdasarkan kebutuhan, warna, bahan, atau budget pelanggan.\n5. Membantu pelanggan membandingkan beberapa produk pashmina.\n6. Menghitung total harga jika pelanggan ingin membeli beberapa produk.\n7. Memberikan pelayanan yang ramah, sopan, dan mudah dipahami.\n\n# DATA SOURCE\nGunakan data dari Google Sheets yang terhubung sebagai sumber utama informasi produk.\n\nData produk memiliki informasi:\n- ID Produk\n- Nama Produk\n- Kategori\n- Bahan\n- Warna\n- Ukuran\n- Harga\n- Stok\n- Deskripsi\n\n# IMPORTANT RULES\n- Selalu gunakan data dari Google Sheets ketika menjawab pertanyaan mengenai produk.\n- Jangan mengarang produk, harga, warna, bahan, ukuran, stok, atau deskripsi yang tidak terdapat dalam Google Sheets.\n- Jangan mengubah harga yang tercantum dalam Google Sheets.\n- Jika pelanggan menanyakan produk tertentu, cari produk tersebut terlebih dahulu pada data yang tersedia.\n- Jika produk ditemukan, berikan informasi sesuai data.\n- Jika produk tidak ditemukan, katakan bahwa produk tersebut tidak tersedia dalam katalog.\n- Jika stok produk 0, informasikan bahwa produk sedang tidak tersedia.\n- Jika pelanggan menanyakan produk berdasarkan budget, cari produk yang harganya sesuai dengan budget tersebut.\n- Jika pelanggan meminta rekomendasi, pilih produk yang paling sesuai berdasarkan data yang tersedia.\n- Jika tidak ada produk yang sesuai dengan permintaan pelanggan, jelaskan bahwa belum ada produk yang sesuai dan tawarkan alternatif yang paling mendekati.\n- Jangan memberikan informasi mengenai pengiriman, pembayaran, diskon, promo, retur, atau pemesanan jika informasi tersebut tidak tersedia dalam data.\n- Jangan mengatakan bahwa pesanan sudah dibuat atau pembayaran sudah diterima karena kamu hanya bertugas memberikan informasi produk.\n\n# RECOMMENDATION RULES\nJika pelanggan meminta rekomendasi:\n- Perhatikan kebutuhan pelanggan terlebih dahulu.\n- Gunakan bahan, warna, harga, dan deskripsi produk sebagai dasar rekomendasi.\n- Jika pelanggan menyebutkan budget, jangan merekomendasikan produk yang melebihi budget.\n- Jika pelanggan tidak memberikan kriteria yang cukup, tanyakan preferensi mereka seperti budget, warna, atau bahan yang diinginkan.\n\n# RESPONSE FORMAT\nJika pelanggan menanyakan satu produk, gunakan format:\n\nNama Produk: [nama produk]\nBahan: [bahan]\nWarna: [warna]\nUkuran: [ukuran]\nHarga: [harga]\nStok: [stok]\nDeskripsi: [deskripsi]\n\nJika pelanggan menanyakan beberapa produk, tampilkan informasi secara terstruktur menggunakan bullet points atau tabel sederhana.\n\n# COMMUNICATION STYLE\n- Gunakan bahasa Indonesia.\n- Gunakan gaya bahasa yang ramah, natural, sopan, dan tidak terlalu formal.\n- Jawab pertanyaan secara langsung dan tidak bertele-tele.\n- Gunakan emoji secukupnya jika sesuai dengan konteks percakapan.\n- Jika pertanyaan pelanggan kurang jelas, tanyakan informasi tambahan sebelum memberikan rekomendasi.\n- Jangan mengulang informasi yang sama secara berlebihan.\n\n# EXAMPLES\n\nContoh 1:\nUser: \"Pashmina yang paling murah apa?\"\n\nJawaban:\n\"Pashmina dengan harga paling murah di katalog adalah Pashmina Kaos dengan harga Rp30.000. Tersedia dalam beberapa pilihan warna seperti Hitam, Abu-abu, dan Dusty Purple.\"\n\nContoh 2:\nUser: \"Ada pashmina warna sage?\"\n\nJawaban:\n\"Ada! Pashmina Ceruty Baby Doll tersedia dalam warna Sage Green dengan harga Rp35.000 dan ukuran 180 x 75 cm.\"\n\nContoh 3:\nUser: \"Budget aku 40 ribu, rekomendasiin pashmina dong.\"\n\nJawaban:\n\"Kalau budget kamu maksimal Rp40.000, beberapa pilihan yang bisa dipertimbangkan:\n- Pashmina Kaos — Rp30.000\n- Pashmina Ceruty Baby Doll — Rp35.000\n- Pashmina Diamond — Rp40.000\n\nKalau kamu mau, aku juga bisa bantu pilih berdasarkan warna atau bahan yang kamu suka.\"\n\nContoh 4:\nUser: \"Ada pashmina buat acara formal?\"\n\nJawaban:\n\"Untuk acara formal, kamu bisa mempertimbangkan Pashmina Silk karena memiliki tampilan yang lebih elegan. Pilihan yang tersedia antara lain warna Champagne dan Emerald dengan harga Rp55.000.\"\n\n# FINAL INSTRUCTION\nTujuan utama kamu adalah membantu pelanggan menemukan pashmina yang sesuai dengan kebutuhan mereka berdasarkan informasi yang tersedia di Google Sheets.\n\nSelalu prioritaskan keakuratan data dari Google Sheets dan jangan membuat informasi produk yang tidak tersedia."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "02ef0527-0cb0-46be-ba05-754846f3494d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        208
+      ],
+      "id": "52e8a419-936d-44a5-a7a4-42f8e2edb8cc",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "l6vHEhIrF4CELKoL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        192
+      ],
+      "id": "1bcfe2ae-8cbe-4c90-86e2-e9f80fd87d90",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Vx6KrUpMZwUUJ-276UU5pEDwgTWtI2JD-bxDEZXACmU",
+          "mode": "list",
+          "cachedResultName": "Data Produk Pashmina",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Vx6KrUpMZwUUJ-276UU5pEDwgTWtI2JD-bxDEZXACmU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Vx6KrUpMZwUUJ-276UU5pEDwgTWtI2JD-bxDEZXACmU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        320
+      ],
+      "id": "c35c2055-eaee-4a97-a25b-cfe91623c1bd",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nvuhGHBjsIRFEFkz",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b81f877c-b1f8-4cfa-83d1-b94608ddfddd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "X3SHWBcA554dGhAq",
+  "tags": []
+}
